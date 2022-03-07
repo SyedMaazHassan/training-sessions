@@ -1,0 +1,15 @@
+.icon-add{
+    background-color: green;
+    color: white;
+    border-radius: 100%;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.icon-cancel{
+    background-color: red;
+    color: white;
+    border-radius: 100%;
+    padding: 3px;
+    cursor: pointer;
+}

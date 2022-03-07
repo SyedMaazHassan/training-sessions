@@ -1,0 +1,31 @@
+<div class="bg-info" style="height: 70px;">
+    <div class="container pt-3">
+        <i class="material-icons mb-3 float-left text-info bg-white mr-3" style="border-radius: 100%; padding:5px; font-size:30px; cursor: pointer;" title="Go back" onclick="window.history.back()">keyboard_arrow_left</i>
+        {% if user.is_authenticated %}        
+        <div class="float-left mt-1 text-white">
+            <h4>Hi {{user.first_name}}</h4>
+        </div>
+        {% endif %}
+        <div class="float-right">
+            {% if user.is_authenticated %}
+            <a href="login">
+                <button type="button" style="border: solid 1px white; width: 100px;" class="mx-2 btn btn-info">Logout</button>
+
+            </a>
+
+            {% else %}
+            <a href="login">
+                <button type="button" style="border: solid 1px white; width: 100px;" class="mx-2 btn btn-info">Login</button>
+
+            </a>
+
+            <a href="signup">
+                <button type="button" style="border: solid 1px white; width: 100px;" class="mx-2 btn btn-info">Sign Up</button>
+            </a>
+            {% endif %}
+    
+        </div>
+
+    </div>        
+
+</div>

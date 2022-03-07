@@ -1,0 +1,227 @@
+{% extends 'inc/dashboard_base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% bootstrap_javascript %}
+
+
+{% block title %}Learn{% endblock title %}
+
+{% block content %}
+
+{% include 'inc/bookmarkmodal.inc.html' %}
+
+
+
+<div>
+    {% include 'inc/msgs.inc.html' %}
+    
+    <div class="row mt-4">
+        <div class="col-sm-6">
+            <div class="radius-10 google-shadow" style="border-left: solid 1px #cccccc;">
+                <div class="row p-2 m-0 bg-white border" style="border-radius: 10px 10px 0px 0px;">
+                    <div class="col-sm-8  d-flex align-items-center">
+                        <img src="{% static 'img/chat.png' %}" style="width: 50px; height: 50px;" class="border p-1 radius-100" alt="">
+                        <h5 class="mb-0 mx-3">iStudy bot</h5>
+                    </div>
+                    <div class="col-sm-4 d-flex align-items-center justify-content-end">
+                        <img src="{% static 'img/typing.gif' %}" id="typing-gif" style="width: 50px; opacity: 0;" alt="">
+                    </div>
+                </div>
+
+                <div style="max-height: 65vh; min-height: 68vh; overflow-y: auto;" id="message-container" class="p-3">
+                    {% for learning in previous_learning %}
+                        <div class="card p-2 px-3 radius-10 mb-2 message first-person">
+                            <p class="mb-1">{{ learning.query }}</p>
+                            <div class="d-flex justify-content-end message-first-time">
+                                {{ learning.created_at.time }}
+                            </div>
+                        </div>
+
+                        {% if learning.term or learning.bookmark %}
+
+                            {% if learning.term %}
+                            <div class="card p-2 px-3 radius-10 mb-2 message second-person">
+                                <div class="row">
+                                    <div class="col-sm-8 align-items-center mb-1 d-flex">
+                                        <h5 class="my-0 text-dark">{{ learning.clip_text }}</h5>
+
+                                        <div onclick="launch_text('term/{{ learning.term.id }}')" data-bs-toggle="tooltip" data-bs-placement="right"
+                                            title="See formatted explanation" class="text-success bg-white mx-2 p-0 my-0 radius-100 mk-pointer">
+                                            <i class="material-icons p-0 my-0" style="font-size:18px">launch</i>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-4 d-flex justify-content-end align-items-center">
+                                        <span class="badge badge-pill bg-secondary badge-primary radius-100">Term</span>
+                                    </div>
+                                </div>
+              
+                            
+                                <p class="mb-1" title="{{ learning.term.get_text_only }}">
+                                    {{ learning.term.get_short_text_only }}
+                                </p>
+                            
+                                <div class="d-flex justify-content-end message-second-time">
+                                    {{ learning.created_at.time }}
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if learning.bookmark %}
+                            <div class="card p-2 px-3 radius-10 mb-2 message second-person">
+                                <div class="row">
+                                    <div class="col-sm-8 align-items-center mb-1 d-flex">
+                                        <h5 class="my-0 text-dark">{{ learning.clip_text }}</h5>
+                                
+                                        <div onclick="launch_text('bookmark/{{ learning.bookmark.id }}')" data-bs-toggle="tooltip" data-bs-placement="right"
+                                            title="See formatted explanation" class="text-success bg-white mx-2 p-0 my-0 radius-100 mk-pointer">
+                                            <i class="material-icons p-0 my-0" style="font-size:18px">launch</i>
+                                        </div>
+                                
+                                    </div>
+                                
+                                    <div class="col-sm-4 d-flex justify-content-end align-items-center">
+                                        <span class="badge badge-pill bg-secondary badge-primary radius-100">Bookmark</span>
+                                    </div>
+                                </div>
+                            
+                                <p class="mb-1" title="{{ learning.term.get_text_only }}">
+                                    {{ learning.bookmark.content }}
+                                </p>
+                            
+                                <div class="d-flex justify-content-end message-second-time">
+                                    {{ learning.created_at.time }}
+                                </div>
+                            </div>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <div class="card p-2 px-3 radius-10 mb-2 message second-person">
+                                <div class="align-items-center mb-1 d-flex">
+                                    <h5 class="my-0 text-dark">
+                                        {{ learning.clip_text }}
+                                    </h5>
+                                    <div style="height: fit-content;">
+                                        <a href="{% url 'create_term'  %}?title={{ learning.query }}" data-bs-toggle="tooltip"
+                                            data-bs-placement="right" title="Create this term"
+                                            class="btn text-success bg-white mx-1 p-0 my-0 border radius-100 mk-pointer">
+                                            <i class="material-icons p-0 my-0">add</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            
+                                <p class="mb-1">This term doesn't exist in record.</p>
+                            
+                                <div class="d-flex justify-content-end message-second-time">
+                                    {{ learning.created_at.time }}
+                                </div>
+                            </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+                  
+                </div>
+
+                <div class="row p-2">
+                    <div class="col-sm-12 d-flex">
+                        
+                        <div class="form-group mx-1" style="width: 91%;">
+                            <input class="form-control" placeholder="Start typing..." id="query" type="text">
+                            <small class="text-danger mt-2" id="query-error"></small>
+                        </div>
+                        <button onclick="send_query()" type="button"  style="width: 9%; height: 40px;" class="radius-100 btn btn-success text-white border p-2 border">
+                            <i class="material-icons">send</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6"
+            style="display: -webkit-flex;
+            display: flex;
+            height: 85vh;
+            overflow: auto;">
+
+            <!-- <div id="no_render_container">
+                <div class="py-5 my-5 d-flex align-items-center justify-content-center">
+                    <div class="text-center mt-5">
+                        <img src="{% static 'img/notfound.png' %}" style="width: 200px;" alt="">
+                        <h1 class="display-6 text-secondary my-4 text-main-head">
+                            No term opened
+                        </h1>
+                    </div>
+                </div>
+            </div> -->
+
+            <div style="width: 100%;">
+
+               
+
+             
+
+                <div id="render_container" style="display: none;">
+                    <small><i id="render_category"></i></small>
+                    
+                    <div class="row">
+                        <div class="col-sm-9 d-flex align-items-center">
+                            <h3 class="my-0 py-0" id="render_title"></h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" id="speak_icon" style="font-size: 35px;" class="mk-pointer my-2 mx-3 text-secondary" width="25" height="25" fill="currentColor" class="bi bi-volume-up-fill"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
+                                <path
+                                    d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
+                                <path
+                                    d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z" />
+                            </svg>
+                        </div>
+                    
+                        <div class="col-sm-3 d-flex align-items-center justify-content-end">
+                            <a id="render_link" href="" target="_blank">
+                                <button type="button" class="radius-100 btn-success btn">
+                                    Open full view
+                                </button>
+                            </a>
+                        </div>
+                    
+                    </div>
+                    
+                    <div style="display: inline-block;" id="render_topics">
+                    
+                    </div>
+
+                    <div id="render_content" class="mt-2 text-output" style="width: 100%;">
+                    
+                    </div>
+
+    
+
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var to_open = '{{ to_open }}';
+    var serialized_learning = {{ serialized_learnings | safe }}
+    var titles_array = {{ titles_array | safe }};
+    var titles_boomark = {{ titles_boomark | safe }};
+    var query_to_send_url = "{% url 'learn_by_query' %}";
+    var new_query_to_send_url = "{% url 'new_learn_by_query' %}";
+    var create_term_url = "{% url 'create-single-term' %}";
+</script>
+<script src="{% static 'assets/js/learn.js' %}"></script>
+<script src="{% static 'assets/js/bookmark.js' %}"></script>
+
+{% endblock content %}

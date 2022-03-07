@@ -1,0 +1,35 @@
+{% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags}}{% endif %} d-flex align-items-center radius-10 alert-dismissible"
+        role="alert">
+        {% if message.tags == 'error' %}
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+            <use xlink:href="#exclamation-triangle-fill" />
+        </svg>
+        {% endif %}
+
+        {% if message.tags == 'success' %}
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+            <use xlink:href="#check-circle-fill" />
+        </svg>
+        {% endif %}
+
+        {% if message.tags == 'warning' %}
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
+            <use xlink:href="#exclamation-triangle-fill" />
+        </svg>
+        {% endif %}
+
+        <div>
+            {{ message }}
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
+
+<script>
+    setTimeout(() => {
+        $(".alert").remove();
+    }, 2000);
+</script>
+

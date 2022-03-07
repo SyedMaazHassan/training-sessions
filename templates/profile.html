@@ -1,0 +1,54 @@
+{% extends 'inc/dashboard_base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% bootstrap_javascript %}
+
+{% block title %}Dashboard{% endblock title %}
+
+
+
+{% block content %}
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Update your profile</h1>
+    <!-- <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            This week
+        </button>
+    </div> -->
+
+
+</div>
+    {% include 'inc/msgs.inc.html' %}
+
+<div>
+    <div>
+        <div class="my-4">
+            <form action="" method="post">
+                {% csrf_token %}
+                {% bootstrap_field user_form.first_name layout='floating' %}
+                {% bootstrap_field user_form.last_name layout='floating' %}
+                {% bootstrap_field user_form.email layout='floating' %}
+
+                <button type="submit" name="" id="" class="btn btn-success  btn-block">Update profile</button>
+            </form>
+ 
+        <!-- <img src="{% static 'img/cover2.jpg' %}" style="width: 70%;" alt=""> -->
+    </div>
+</div>
+<!-- <canvas class="my-4 w-100 text-success" id="myChart" width="900" height="380"></canvas> -->
+
+<script src="{% static 'assets/js/folders.js' %}"></script>
+<script>
+    $("#id_password1, #id_password2").removeAttr("required");
+</script>
+
+{% endblock content %}

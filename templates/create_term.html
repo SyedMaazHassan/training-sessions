@@ -1,0 +1,114 @@
+{% extends 'inc/dashboard_base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% bootstrap_javascript %}
+
+
+
+{% block title %}Create term{% endblock title %}
+
+
+{% block content %}
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ operation }} term</h1>
+</div>
+
+<div>
+    {% include 'inc/msgs.inc.html' %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form action="" method="post" id="term-form">
+                {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-4">
+                            
+                            {% bootstrap_field term_form.title layout='floating' %}
+                            {% bootstrap_field term_form.category layout='floating' %}
+                            {% bootstrap_field term_form.typee layout='floating' %}
+                            {% bootstrap_field term_form.folder layout='floating' %}
+                            {% bootstrap_field term_form.topics layout='floating' %}
+
+                        </div>
+            
+                        <div class="col-sm-8">
+                            <div class="text-center py-5" id="my-spinner">
+                                <div class="spinner-border text-success"></div>
+                            </div>
+                            <div id="rich-text-editor-container" style="display: none;">
+                                {% bootstrap_field term_form.content layout='floating' %}
+                                <!-- <div class="page-wrapper box-content">
+                                    <textarea class="content" name="content" id="myText" required>{{content}}</textarea>
+                                </div> -->
+                            </div>
+                          
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-right d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success">Save new content</button>
+                </div>
+            
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{% static 'assets/js/category.js' %}"></script>
+<script src="{% static 'assets/js/create-term.js' %}"></script>
+<script src="{% static 'assets/js/topic.js' %}"></script>
+<script>
+    $("#id_content").css("height", "96%");
+    $("#id_category").parent().append(
+        `
+            <div class="pt-2">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#categoryForm" class="btn btn-secondary btn-sm">Add new category</button>
+            </div>
+        `
+    );
+    $("#id_topics").parent().append(
+            `
+            <div class="pt-2">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#topicForm" class="btn btn-secondary btn-sm">Add new topics</button>
+            </div>
+        `
+        );
+
+
+    $("#term-form, #id_typee, #id_folder, #id_category, #id_topics").on("keyup click change", function () {
+        localStorage.title = $("#id_title").val();
+        localStorage.content = $("#id_content").val();
+        localStorage.type = $("#id_typee").val();
+        localStorage.folder = JSON.stringify($("#id_folder").val());
+        localStorage.category = JSON.stringify($("#id_category").val());
+        localStorage.topics = JSON.stringify($("#id_topics").val());   
+        console.log("hha");    
+    });
+
+    if (localStorage.title) { $("#id_title").val(localStorage.title); }
+    if (localStorage.content) { $("#id_content").val(localStorage.content); }
+    if (localStorage.type) {   $("#id_typee").val(localStorage.type).change(); }
+    if (localStorage.folder) { $("#id_folder").val( JSON.parse(localStorage.folder) ).change(); }
+    if (localStorage.category) { $("#id_category").val(JSON.parse(localStorage.category)).change(); }
+    if (localStorage.topics) { $("#id_topics").val(JSON.parse(localStorage.topics)).change(); }
+
+    // $("#id_category").val(42).change();
+    $("#term-form").on("submit", function () {
+        localStorage.removeItem("title");
+        localStorage.removeItem("content");
+        localStorage.removeItem("type");
+        localStorage.removeItem("folder");
+        localStorage.removeItem("category");
+        localStorage.removeItem("topics");
+    });
+ 
+</script>
+
+
+
+{% endblock content %}

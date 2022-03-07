@@ -1,0 +1,78 @@
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- <base href="http://istudy.pythonanywhere.com/"> -->
+    <base href="http://127.0.0.1:8000/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>{% block title %}{% endblock title %}</title>
+    <style>
+        .radius-10 {
+            border-radius: 10px;
+        }
+
+        .background-light {
+            background-color: #f6f8fa;
+        }
+
+        div,
+        input,
+        button {
+            border-radius: 10px !important;
+        }
+
+        button.btn {
+            padding: 12px !important;
+        }
+
+        form{
+            margin-bottom: 0 !important;
+        }
+
+        .text-main-head{
+            font-size: 33px;
+        }
+
+        .link-text, .link-text:hover{
+            text-decoration: none; 
+            font-weight: 600;
+            color: #198754; 
+        }
+
+        .popover{
+            box-shadow: 2px 2px 2px #cccccc;
+        }
+
+        .popover-header{
+            background-color: #198754;
+            color: white;
+            border-radius: 10px 10px 0px 0px;
+        }
+
+     
+    </style>
+</head>
+
+<body>
+
+    
+    <div class="text-center py-4 mt-4">
+        <img style="width: 200px;" src="{% block img_source %}{% endblock img_source %}" alt="">
+        <h1 class="display-6 mb-0 mt-4 text-main-head">
+            {% block form_title %}{% endblock form_title %}
+        </h1>
+    </div>
+    {% block content %}
+    {% endblock content %}
+    
+
+</body>
+
+</html>

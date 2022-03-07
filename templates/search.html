@@ -1,0 +1,254 @@
+{% extends 'inc/dashboard_base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% bootstrap_javascript %}
+
+
+{% block title %}Dashboard{% endblock title %}
+
+
+
+{% block content %}
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    {% if request.GET.query %}
+    <h1 class="h2">Result for <span class="text-success">"{{ request.GET.query }}"</span></h1>
+    {% endif %}
+    <!-- <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            This week
+        </button>
+    </div> -->
+
+
+</div>
+
+<div>
+    <div>
+        <div class="my-4">
+
+            {% if not request.GET.query or not_found %}
+                <div class="text-center py-5">
+                    <img src="{% static 'img/notfound.png' %}" style="width: 200px;" alt="">
+                    <h1 class="display-6 text-secondary my-4 text-main-head">
+                        Not found anything :(
+                    </h1>
+                    <!-- <button type="button" class="btn btn-outline-secondary mt-3" data-bs-toggle="modal"
+                        data-bs-target="#categoryForm">Add categories</button> -->
+                </div>
+            {% endif %}
+
+            {% if all_folders %}
+            <div>
+                <h4 class="text-secondary d-flex align-items-center">
+                    <svg class="text-warning" style="margin-right: 7px;" xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                    </svg>
+                    Searched folders</h4>
+            </div>
+            <div class="row px-1 mt-3">
+                {% for folder in all_folders %}
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 px-2 mb-3">
+                    <div class="card radius-10 text-left hover-light google-shadow">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-10">
+                                    <a class="text-decoration-none text-dark"
+                                        href="{% url 'single-folder' folder.id %}">
+                                        <p class="card-text">{{ folder.name }}</p>
+                                    </a>
+                                </div>
+
+                                <div class="col-2">
+                                    {% if folder.is_delete_allowed %}
+                                    <!-- <a href="{% url 'delete_folder' folder.id %}" onclick="return askToDelete(this)">
+                                        <i class="material-icons text-light-danger mk-pointer" style="font-size:21px;">delete</i>
+                                    </a> -->
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </a> -->
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if all_bookmarks %}
+        <div class="my-3">
+
+            <div>
+                <h4 class="text-secondary d-flex align-items-center">
+                    <svg class="text-warning" style="margin-right: 7px;" xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                    </svg>
+                    Searched Bookmarks</h4>
+            </div>
+            <div class="row px-1 mt-3">
+                {% for bookmark in all_bookmarks %}
+                <div class="col-sm-4 d-flex align-items-stretch mb-4">
+                    <div class="card google-shadow radius-10" style="width: 100%;">
+                        <!-- <div class="card-header p-1" style="height: 3px !important;"></div> -->
+                        <div class="card-header p-2 d-flex">
+                            <div style="width: 75%;" class="d-flex align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="cricle circle-{{bookmark.color}}"
+                                    style="margin-right:5px" width="16" height="16" fill="currentColor"
+                                    class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                    <circle cx="8" cy="8" r="8" />
+                                </svg>
+                                <h6 class="card-title mb-0 text-dark">{{ bookmark.title }}</h6>
+                                <svg xmlns="http://www.w3.org/2000/svg" onclick="speak('{{ bookmark.content }}')"
+                                    style="font-size: 35px;" class="mk-pointer my-0 mx-2  text-success" width="25"
+                                    height="25" fill="currentColor" class="bi bi-volume-up-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
+                                    <path
+                                        d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
+                                    <path
+                                        d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z" />
+                                </svg>
+                            </div>
+
+                            <div class="d-flex justify-content-end" style="width: 25%;">
+                                <small>{{ bookmark.created_at.date }}</small>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">{{ bookmark.content }}</p>
+                        </div>
+
+                        <div class="card-footer bg-white radius-10 border-0">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    {% if bookmark.source %}
+                                    <a class="btn btn-outline-success radius-10 mb-2"
+                                        href="{% url 'single-term' bookmark.source.folder.id bookmark.source.id %}#:~:text={{ bookmark.content }}"
+                                        role="button">Open source term</a>
+                                    {% else %}
+                                    <a class="btn btn-outline-danger radius-10 mb-2" role="button">Source term
+                                        deleted</a>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-sm-4 d-flex justify-content-end align-items-center">
+                                    <!-- <a href="{% url 'delete_bookmark' bookmark.id %}" onclick="return askToDelete(this)">
+                                        <i class="material-icons text-light-danger mk-pointer">delete</i>
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+        {% endif %}
+
+
+
+        {% if all_terms %}
+        <div class="my-3">
+
+            <div>
+                <h4 class="text-secondary d-flex align-items-center">
+                    <svg class="text-warning" style="margin-right: 7px;" xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                    </svg>
+                    Searched Terms</h4>
+            </div>
+            <div class="row px-1 mt-3">
+                {% for term in all_terms %}
+                <div class="col-sm-4 d-flex align-items-stretch mb-4">
+                    <div class="card google-shadow radius-10" style="width: 100%;">
+                        <!-- <div class="card-header p-1" style="height: 3px !important;"></div> -->
+                        <div class="card-header p-2 d-flex">
+                            <div style="width: 75%;" class="d-flex align-items-center">
+                                <h6 class="card-title mb-0 text-dark">{{ term.title }}</h6>
+                                <svg xmlns="http://www.w3.org/2000/svg" onclick="speak('{{ term.content }}')" style="font-size: 35px;"
+                                    class="mk-pointer my-0 mx-2  text-success" width="25" height="25" fill="currentColor" class="bi bi-volume-up-fill"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
+                                    <path
+                                        d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
+                                    <path
+                                        d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z" />
+                                </svg>
+                            </div>
+
+                            <div class="d-flex justify-content-end" style="width: 25%;">
+                                <small>{{ term.created_at.date }}</small>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text" title="{{ term.content }}">{{ term.get_short_text_only }}</p>
+                        </div>
+
+                        <div class="card-footer bg-white radius-10 border-0">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <a class="btn btn-outline-success radius-10 mb-2"
+                                        href="{% url 'single-term' term.folder.id term.id %}" role="button">Open
+                                        term</a>
+                                </div>
+
+                                <div class="col-sm-4 d-flex justify-content-end align-items-center">
+                                    <!-- <a href="{% url 'delete_term' term.id %}" onclick="return askToDelete(this)">
+                                        <i class="material-icons text-light-danger mk-pointer">delete</i>
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- <img src="{% static 'img/cover2.jpg' %}" style="width: 70%;" alt=""> -->
+    </div>
+</div>
+<!-- <canvas class="my-4 w-100 text-success" id="myChart" width="900" height="380"></canvas> -->
+
+<script src="{% static 'assets/js/folders.js' %}"></script>
+<script>
+    function confirmDelete() {
+        window.location.href = cat_redirect_url;
+    }
+
+    function askToDelete(element) {
+        let link = $(element).attr("href");
+        cat_redirect_url = link
+        $("#confirmation").show();
+        var myModal = new bootstrap.Modal(document.getElementById('confirmation'), {
+            keyboard: false
+        });
+        myModal.show();
+        return false;
+    }
+</script>
+
+{% endblock content %}

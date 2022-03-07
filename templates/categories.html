@@ -1,0 +1,131 @@
+{% extends 'inc/dashboard_base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% bootstrap_javascript %}
+
+
+{% block title %}Categories{% endblock title %}
+
+
+
+{% block content %}
+
+
+<div class="modal fade" id="confirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="confirmationLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sconfirmationLabel">Alert!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="border: 0;">
+                <div style="font-size: 20px;" class="display-6">
+                    Are you sure you want to delete this category?
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="categoryForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add new categories</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-floating d-flex mb-2">
+                        <input class="form-control" id="cat_name" style="border-right: 0px; width: 85%; border-radius: 10px 0px 0px 10px !important;" name="text" placeholder="Category name">
+                        <form action="{% url 'add-catgories' %}" method="post" id="cat_form">
+                            {% csrf_token %}
+                            <input name="categories" id="all_cats_textarea" type="hidden">
+                        </form>
+                        <label for="cat_name">Category name</label>
+                        <button 
+                            onclick="addNewCat()"
+                            class="btn bg-white text-success border p-2 border" 
+                            style="border-radius: 0px 10px 10px 0px !important; width: 15%; border-left: 0px;" type="button">
+                            <i class="material-icons">add</i>
+                        </button>
+                    </div>
+                    <div class="text-danger mx-2 mb-2" id="cat_error"></div>
+
+                    <div class="py-4" style="display: inline;" id="cat_container"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-success" onclick="formSubmit()">Save categories</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Categories</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <button 
+            data-bs-toggle="modal" data-bs-target="#categoryForm"
+            type="button" 
+            class="radius-100 btn bg-white text-success border p-2 border">
+            <i class="material-icons">add</i>
+        </button>
+    </div>
+</div>
+
+<div>
+    {% include 'inc/msgs.inc.html' %}
+
+    <div class="row px-2">
+        {% if not all_categories%}
+            <div class="col-sm-12 py-5 my-5 d-flex align-items-center justify-content-center">
+                <div class="text-center">
+                    <img src="{% static 'img/notfound.png' %}" style="width: 200px;" alt="">
+                    <h1 class="display-6 text-secondary my-4 text-main-head">
+                        No category exists
+                    </h1>
+                    <button type="button" class="btn btn-outline-secondary mt-3" data-bs-toggle="modal" data-bs-target="#categoryForm">Add categories</button>
+                </div>
+            </div>
+        {% endif %}
+
+        {% for category in all_categories %}
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 px-2 mb-3">
+            <div class="card radius-10 text-left hover-light google-shadow">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-10">
+                            <p class="card-text">{{ category.name }}</p>
+                      </div>
+
+                      <div class="col-2">
+                          <a 
+                            href="{% url 'delete_category' category.id %}" 
+                            onclick="return askToDelete(this)">
+                            <i class="material-icons text-light-danger mk-pointer">delete</i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{% static 'assets/js/category.js' %}"></script>
+
+{% endblock content %}

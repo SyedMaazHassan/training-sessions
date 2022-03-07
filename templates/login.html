@@ -1,0 +1,47 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% bootstrap_javascript %}
+
+
+{% block img_source %}
+    {% static 'img/logo.png' %}
+{% endblock img_source %}
+
+{% block form_title %}
+    Sign in to iStudy
+{% endblock form_title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <div>
+                {% include 'inc/msgs.inc.html' %}
+            </div>
+
+            <div class="form border p-4 radius-10 background-light">
+                <form action="{% url 'signin' %}" method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form login_form layout="floating" %}
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success" type="submit">Sign in</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card text-center mt-4">
+              <div class="card-body">
+                <p class="card-text">New to iStudy? <a href="{% url 'signup' %}" class="link-text">Create an account</a></p>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+
+{% endblock content %}
