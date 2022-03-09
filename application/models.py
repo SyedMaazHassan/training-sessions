@@ -3,6 +3,10 @@ from datetime import datetime
 from django.contrib.auth.models import User, auth
 from django.utils import timezone
 import html2text
+from django.contrib.sessions.models import Session
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
 
 # Create your models here.
 
@@ -140,6 +144,7 @@ class Learning(models.Model):
 
 # Custom Model for the Device 
 class Device(models.Model):
+    session = models.OneToOneField(Session, on_delete=models.CASCADE)
     browser = models.CharField(max_length=50)
     device = models.CharField(max_length=50)
     device_type = models.CharField(max_length=50)
@@ -147,7 +152,7 @@ class Device(models.Model):
     ip = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     datetime = models.DateTimeField(auto_now_add=True)
-
+    last_login = models.DateTimeField(default = timezone.now)
 
     # method to fetch the ip of client 
     def get_client_ip(self, request):
@@ -167,13 +172,13 @@ class Device(models.Model):
         is_pc = request.user_agent.is_pc
 
         if is_mobile:
-            self.device_type = 'mobile'
+            self.device_type = 'Mobile'
         elif is_tablet:
-            self.device_type = 'tablet'
+            self.device_type = 'Tablet'
         elif is_pc:
-            self.device_type = 'pc or laptop' 
+            self.device_type = 'PC or Laptop' 
         else:
-            self.device_type = 'unknown'
+            self.device_type = 'Unknown'
                 
         # fetching the browser info
         browser_family = request.user_agent.browser.family
@@ -193,7 +198,7 @@ class Device(models.Model):
         self.ip = ip
     
     def is_already_exists(self):
-        devices = Device.objects.filter(
+        device_queryset = Device.objects.filter(
             user=self.user,
             browser=self.browser,
             device = self.device,
@@ -201,15 +206,29 @@ class Device(models.Model):
             os = self.os,
             ip = self.ip)
 
-        return devices.exists()
+        return device_queryset.first()
 
     def is_limit_reached(self, limit=4):
         devices = Device.objects.filter(user=self.user)
+        print(devices.count())
         return not devices.count() < limit
 
+    def save(self, *args, **kwargs):
+        # figure out warranty end date
+        if self.pk:
+            self.last_login = timezone.now()
+        super(Device, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.user} - ({self.os}, {self.browser}, {self.device_type}, {self.ip}, {self.session})'
 
 
+#signal to remove session from DB after deleting the device
+@receiver(post_delete, sender = Device)
+def delete_session(sender, instance, *args, **kwargs):
+    instance.session.delete()
 
+    
 
 
 

@@ -14,6 +14,44 @@ import time
 from django.db.models import Q
 import re
 import uuid
+from django.contrib.auth import user_logged_in
+from django.dispatch.dispatcher import receiver
+
+
+# Signals to add device in loggged in device 
+@receiver(user_logged_in)
+def remove_other_sessions(sender, user, request, **kwargs):
+    request.session.save()
+    session_id = request.session.session_key
+    new_device = Device(user=user, session_id = session_id)
+    new_device.set_browser_info(request)
+    is_exists = new_device.is_already_exists()
+    if is_exists:
+        new_device = is_exists
+        new_device.session_id = session_id
+
+    if new_device.is_limit_reached() and not is_exists:
+        messages.error(request, "You have reached maximum Sessions limit!")
+        print("Loging out")
+        logout(request)
+        return
+
+    new_device.save()
+
+
+
+    # remove other sessions
+    print("-------------------")      
+    # return redirect("profile")  
+    # save current session
+    print("-------------------")
+
+    # create a link from the user to the current session (for later removal)
+    # UserSession.objects.get_or_create(
+    #     user=user,
+    #     session_id=request.session.session_key
+    # )
+
 
 
 @login_required
@@ -33,7 +71,8 @@ def profile(request):
         user_form = UserForm(instance=user)
         messages.success(request, "Profile has been updated")
 
-    context = {'user_form': user_form, "page": "profile"}
+    device_sessions = Device.objects.filter(user = request.user)
+    context = {'user_form': user_form, "page": "profile", 'device_sessions': device_sessions}
     return render(request, "profile.html", context)
 
 
@@ -686,15 +725,12 @@ def signin(request):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             user = login_form.cleaned_data
-            print(user)
-            new_device = Device(user=user)
-            status = new_device.set_browser_info(request)
+            # print(user)
+            print("============= LOGIN IN START ===============")
+            login(request, user)
+            print("============= LOGIN IN END ===============")
+            return redirect("index")
 
-            if not new_device.is_limit_reached():
-                login(request, login_form.cleaned_data)
-                if not new_device.is_already_exists():
-                    new_device.save()
-                return redirect("index")
             
 
             # if new_device.is_already_exists():
@@ -752,3 +788,7 @@ def get_browser_info(request):
 
     print(ip)
     return HttpResponse(str)
+
+@login_required
+def delete_user_device(request, device_id):
+    pass

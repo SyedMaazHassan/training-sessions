@@ -49,6 +49,8 @@ urlpatterns = [
     # Test path for checking the browser, IP-address, and device info of the user 
     path('browser/', views.get_browser_info, name = 'browser'),
 
+    path('device/<device_id>/delete', views.delete_user_device, name = 'delete_device')
+
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
