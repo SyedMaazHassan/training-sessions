@@ -59,14 +59,15 @@
                 </thead>
                 <tbody>
                     <!-- Run a loop  -->
+                    {% for device in device_sessions %}
                     <tr>
-                        <td>Chrome 5.1</td>
-                        <td>Windows 11.0</td>
-                        <td>PC or laptop (Other)</td>
-                        <td>124.54.165.44</td>
-                        <td>May 11, 2021 - 11:00 pm</td>
+                        <td>{{ device.browser }}</td>
+                        <td>{{ device.os }}</td>
+                        <td>{{ device.device_type }}</td>
+                        <td>{{ device.ip }}</td>
+                        <td>{{ device.last_login }}</td>
                         <td>
-                            <a href="{% url 'delete_device' 'asdasd' %}" onclick="return confirm('Are you sure you want to remove this session?')">
+                            <a href="{% url 'delete_device' device.id %}" onclick="return confirm('Are you sure you want to remove this session?')">
                             <svg class="text-danger" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill"
                                 viewBox="0 0 16 16">
                                 <path
@@ -75,7 +76,7 @@
                             </a>
                         </td>
                     </tr>
-                    
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

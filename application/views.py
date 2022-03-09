@@ -2,9 +2,10 @@ from os import stat
 import re
 from traceback import print_tb
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from .models import *
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from .forms import *
@@ -16,6 +17,7 @@ import re
 import uuid
 from django.contrib.auth import user_logged_in
 from django.dispatch.dispatcher import receiver
+from django.shortcuts import get_object_or_404
 
 
 # Signals to add device in loggged in device 
@@ -791,4 +793,14 @@ def get_browser_info(request):
 
 @login_required
 def delete_user_device(request, device_id):
-    pass
+    # filtering if the device with the given id exists or not 
+    # device = Device.objects.filter(id=device_id) 
+    device = get_object_or_404(Device, pk=device_id)
+
+    if device.user == request.user:
+        device.delete()
+        return HttpResponseRedirect(reverse('profile'))
+    else:
+        return HttpResponseRedirect(reverse('profile'))
+    
+    
