@@ -1,4 +1,6 @@
+from os import stat
 import re
+from traceback import print_tb
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
@@ -683,8 +685,29 @@ def signin(request):
     if request.method == "POST":
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
-            login(request, login_form.cleaned_data)
-            return redirect("index")
+            user = login_form.cleaned_data
+            print(user)
+            new_device = Device(user=user)
+            status = new_device.set_browser_info(request)
+
+            if not new_device.is_limit_reached():
+                login(request, login_form.cleaned_data)
+                if not new_device.is_already_exists():
+                    new_device.save()
+                return redirect("index")
+            
+
+            # if new_device.is_already_exists():
+            #     login(request, login_form.cleaned_data)
+            #     return redirect("index")
+            # else:
+            #     if new_device.is_limit_reached():
+            #         messages.error(request, 'Max Account Limit Reached!!')
+            #         return redirect("index")
+            #     else:
+            #         new_device.save()
+            #         login(request, login_form.cleaned_data)
+            #         return redirect("index")
 
     return render(request, "login.html", {'login_form': login_form})
 
@@ -693,14 +716,6 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect("signin")
-
-def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
 
 
 # Function for checking the browser, IP-address, and device info of the user
