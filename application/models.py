@@ -10,8 +10,6 @@ import html2text
 # python manage.py migrate
 # python manage.py runserver
 
-
-
 class Category(models.Model):
     name = models.CharField(max_length = 100)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
@@ -138,5 +136,80 @@ class Learning(models.Model):
 
     class Meta:
         ordering = ("id",)
+
+
+# Custom Model for the Device 
+class Device(models.Model):
+    browser = models.CharField(max_length=50)
+    device = models.CharField(max_length=50)
+    device_type = models.CharField(max_length=50)
+    os = models.CharField(max_length=20)
+    ip = models.CharField(max_length=50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    datetime = models.DateTimeField(auto_now_add=True)
+
+
+    # method to fetch the ip of client 
+    def get_client_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
+    # Function for checking the browser, IP-address, and device info of the user
+    def set_browser_info(self, request):
+
+        # status of mobile, pc or tablet
+        is_mobile = request.user_agent.is_mobile
+        is_tablet = request.user_agent.is_tablet 
+        is_pc = request.user_agent.is_pc
+
+        if is_mobile:
+            self.device_type = 'mobile'
+        elif is_tablet:
+            self.device_type = 'tablet'
+        elif is_pc:
+            self.device_type = 'pc or laptop' 
+        else:
+            self.device_type = 'unknown'
+                
+        # fetching the browser info
+        browser_family = request.user_agent.browser.family
+        self.browser = browser_family
+        browser_version = request.user_agent.browser.version
+
+        # fetching the os info
+        os_family = request.user_agent.os.family
+        self.os = os_family
+        os_version = request.user_agent.os.version
+
+        # fetching the device info
+        device_name = request.user_agent.device.family
+        self.device = device_name
+
+        ip = self.get_client_ip(request)
+        self.ip = ip
+    
+    def is_already_exists(self):
+        devices = Device.objects.filter(
+            user=self.user,
+            browser=self.browser,
+            device = self.device,
+            device_type = self.device_type,
+            os = self.os,
+            ip = self.ip)
+
+        return devices.exists()
+
+    def is_limit_reached(self, limit=4):
+        devices = Device.objects.filter(user=self.user)
+        return not devices.count() < limit
+
+
+
+
+
 
 
