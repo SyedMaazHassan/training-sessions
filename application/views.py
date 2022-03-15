@@ -809,3 +809,10 @@ def all_trainings(request):
     return render(request, 'all_trainings.html', {})
     
     
+# Function to Render the All Modules Page 
+def all_modules(request):
+    return render(request, 'all_modules.html', {})
+
+# Function to render a single video page
+def video(request):
+    return render(request, 'video.html', {})

@@ -54,6 +54,12 @@ urlpatterns = [
     # Path to all trainings Page 
     path('all_trainings/', views.all_trainings, name = 'all_trainings'),
 
+    # Path to all modules Page 
+    path('all_modules/', views.all_modules, name = 'all_modules'),
+
+    # Path to single video Page 
+    path('video/', views.video, name = 'video'),
+
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
