@@ -802,5 +802,10 @@ def delete_user_device(request, device_id):
         return HttpResponseRedirect(reverse('profile'))
     else:
         return HttpResponseRedirect(reverse('profile'))
+
+
+# Function to Render the All Trainings Page 
+def all_trainings(request):
+    return render(request, 'all_trainings.html', {})
     
     

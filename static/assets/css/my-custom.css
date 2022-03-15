@@ -112,3 +112,8 @@ button {
   color: grey;
   font-size: 10px;
 }
+
+/* STYLING THE ALL TRAININGS PAGE  */
+#training-thumbnail{
+  width: 25px !important;
+}
