@@ -26,6 +26,9 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'assets/css/dashboard.css' %}" rel="stylesheet">
 
+    <!-- CSS file for the toggle button  -->
+    <link rel="stylesheet" href="{% static 'assets/css/toggle.css' %}">
+
     <!-- <link rel="stylesheet" href="{% static 'assets/richtext/css/site.css' %}"> -->
     <link rel="stylesheet" href="{% static 'assets/richtext/css/richtext.min.css' %}">
     <script src="{% static 'assets/richtext/js/jquery.richtext.js' %}"></script>
@@ -124,6 +127,27 @@
         .mini-nav.nav-item.nav-link{
             color: black !important;
         }
+
+        /* width */
+        ::-webkit-scrollbar {
+        width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+        background: #888; 
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+        }
+
     </style>
 </head>
 

@@ -7,156 +7,265 @@
 {% block title %}Dashboard{% endblock title %}
 {% block content %}
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Single Video</h1>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
+    <p class="text-black">
+        <a href="#" class="text-decoration-none" style="font-size: 1.02rem;">Home</a> >
+        <a href="#" class="text-decoration-none" style="font-size: 1.02rem;">Training 1</a> >
+        <a href="#" class="text-decoration-none" style="font-size: 1.02rem;">Module 1</a> >
+        <a href="#" class="text-decoration-none" style="font-size: 1.02rem;">Video 1</a> >
+    </p>
 </div>
 
 <div class="row">
 
-    <div class="col-lg-9 border rounded mb-3" style="padding: 2rem;">
+    <div class="col-lg-8 border rounded mb-3 p-0">
 
-        <div class="row mb-3 rounded-3">
-            <div class="col-lg-10 d-flex align-items-center flex-wrap flex-md-nowrap p-0">
-                <div class="p-2">
-                    <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
-                        style="width: 15rem; margin-right: 20px; border-radius: 12px;" alt="sample">
-                </div>
-                <div class="p-2">
-                    <h3>Module 1</h3>
-                    <p class="p-0 m-0">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam ullam non eveniet,
-                        exercitationem architecto placeat reiciendis vitae facilis neque reprehenderit aliquid, totam
-                        eius vero minus molestias repudiandae voluptatum? Nihil, harum?
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-2 p-2 d-flex align-items-center">
-                <div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm mb-2">View More</button>
-                    <div class="progress mb-1" style="height: 0.35rem; width: 7rem; border-radius: 0.95rem;">
-                        <div class="progress-bar bg-secondary w-75" role="progressbar" aria-valuenow="75"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="p-0 m-0">75% completed</p>
-                </div>
-            </div>
+        <div class="iframe-container">
+            <iframe style="width: 100%; height: 25rem; border-radius: 4px 4px 0px 0px;"
+                src="https://www.youtube.com/embed/qiUEgSCyY5o"></iframe>
         </div>
-        <hr>
 
-        <div class="row mb-2 rounded-3">
-            <div class="col-lg-10 d-flex align-items-center flex-wrap flex-md-nowrap p-0">
-                <div class="p-2">
-                    <img src="https://image.shutterstock.com/image-vector/online-education-path-success-levels-260nw-1182004732.jpg"
-                        style="width: 15rem; margin-right: 20px; border-radius: 12px;" alt="sample">
-                </div>
-                <div class="p-2">
-                    <h3>Module 2</h3>
-                    <p class="m-0 p-0">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus perspiciatis nobis ullam,
-                        non eligendi labore. Vitae, ex cum? Aperiam officia ipsum, accusamus itaque rem sed repellendus
-                        ipsam ut quia libero.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-2 p-2 d-flex align-items-center">
-                <div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm mb-2">View More</button>
-                    <div class="progress mb-1" style="height: 0.35rem; width: 7rem; border-radius: 0.95rem;">
-                        <div class="progress-bar bg-secondary w-75" role="progressbar" aria-valuenow="75"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="p-0 m-0">75% completed</p>
-                </div>
-            </div>
+        <div class="px-3 mt-3">
+            <button type="button" class="btn w-100 btn-dark mt-1"><img src="{% static 'img/tick.png' %}" alt="tick-icon"
+                    style="width: 18px; margin-bottom: 2px;"> <span class="mx-1">You have completed this
+                    video</span></button>
         </div>
-        <hr>
 
-        <div class="row mb-2 rounded-3">
-            <div class="col-lg-10 d-flex align-items-center flex-wrap flex-md-nowrap p-0">
-                <div class="p-2">
-                    <img src="https://media.istockphoto.com/vectors/people-climbing-books-isolated-on-white-background-vector-vector-id1133538328?k=20&m=1133538328&s=612x612&w=0&h=-vzOo5WLEFZN7GInOA-XiDqLQelHb1_vENnS2r6MRRI="
-                        style="width: 15rem; margin-right: 20px; border-radius: 12px;" alt="sample">
-                </div>
-                <div class="p-2">
-                    <h3>Module 3</h3>
-                    <p>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure officia doloribus quis vel at
-                        sunt neque, laboriosam placeat sapiente autem, atque odio, exercitationem quaerat magni pariatur
-                        tenetur saepe dolores minus.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-2 p-2 d-flex align-items-center">
-                <div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm mb-2">View More</button>
-                    <div class="progress mb-1" style="height: 0.35rem; width: 7rem; border-radius: 0.95rem;">
-                        <div class="progress-bar bg-secondary w-75" role="progressbar" aria-valuenow="75"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="p-0 m-0">75% completed</p>
-                </div>
-            </div>
-        </div>
-        <hr>
-
-        <div class="row mb-2 rounded-3">
-            <div class="col-lg-10 d-flex align-items-center p-0 flex-wrap flex-md-nowrap">
-                <div class="p-2">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrkgjGuBylHzbVOBA7O1BEGF3NQwOE-qhRREn7Bbg6KXuty7LABxWa9iZfujlvk_B957U&usqp=CAU"
-                        style="width: 15rem; margin-right: 20px; border-radius: 12px;" alt="sample">
-                </div>
-                <div class="p-2">
-                    <h3>Module 4</h3>
-                    <p class="m-0 p-0">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum nostrum consequuntur beatae
-                        cupiditate odit facere, aliquid aspernatur similique nulla porro culpa tempora? Esse quibusdam
-                        velit magni ratione dolor reiciendis debitis?
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-2 p-2 d-flex align-items-center">
-                <div>
-                    <button type="button" class="btn btn-outline-secondary btn-sm mb-2">View More</button>
-                    <div class="progress mb-1" style="height: 0.35rem; width: 7rem; border-radius: 0.95rem;">
-                        <div class="progress-bar bg-secondary w-75" role="progressbar" aria-valuenow="75"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <p class="p-0 m-0">75% completed</p>
-                </div>
-            </div>
+        <div class="p-3">
+            <h5 class="m-0 p-0">
+                Whats an Auto Encoder?
+            </h5>
+            <p class="text-secondary fw-bold">
+                Module 1-Video 1 | Lesson 1
+            </p>
+            <h5 class="m-0 p-0">
+                Video 1
+            </h5>
+            <p class="text-dark">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
+                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
+                mollitia nihil atque quis! <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
+                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
+                mollitia nihil atque quis! <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
+                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
+                mollitia nihil atque quis! <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
+                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
+                mollitia nihil atque quis! <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
+                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
+                mollitia nihil atque quis!Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus
+                incidunt ab nostrum consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero
+                doloremque molestiae mollitia nihil atque quis!
+            </p>
         </div>
 
     </div>
 
-    <div class="col-lg-3">
-        <div class="border rounded p-3 mb-4 mt-2">
-            <h4>
-                About Training
-            </h4>
-            <p class="p-0 m-0">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad illum atque cumque, enim delectus minima
-                itaque voluptates consequatur dolorum voluptatem nobis voluptatum, labore laborum ducimus quod vero
-                consequuntur! Dolorem, atque. <br>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. <br>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. At, eius dolorum reiciendis consectetur maiores
-                suscipit quos inventore!
+    <div class="col-lg-4">
+        <div class="border rounded p-3 mb-4 mt-0">
+
+            <h5 class="m-0 p-0">
+                Whats an Auto Encoder?
+            </h5>
+
+            <p class="text-secondary fw-bold">
+                Module 1-Video 1 | Lesson 1
             </p>
+
+            <!-- Rounded switch -->
+            <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <p class="text-dark fw-bold mx-3 p-0">Autoplay</p>
+                </div>
+                <div>
+                    <a href="" onclick="return false;">
+                        <img src="{% static 'img/full-screen-icon.png' %}" alt="full-screen-icon" class="img-fluid"
+                            style="width: 20px;">
+                    </a>
+                </div>
+            </div>
+
+            <div class="videos-parent" style="overflow-y: scroll; overflow-x: hidden; height: 25rem;">
+
+                <div class="d-flex mb-2">
+                    <div>
+                        <p style="margin-right: 10px; margin-top: 35px;">
+                            1
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
+                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
+                    </div>
+                    <div>
+                        <p class="m-0 p-0 text-dark fw-bold mx-3">
+                            Video 1 <br>
+                            Lorem ipsum
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-2">
+                    <div>
+                        <p style="margin-right: 10px; margin-top: 35px;">
+                            2
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
+                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
+                    </div>
+                    <div>
+                        <p class="m-0 p-0 text-dark fw-bold mx-3">
+                            Video 2 <br>
+                            Lorem ipsum
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-2">
+                    <div>
+                        <p style="margin-right: 10px; margin-top: 35px;">
+                            3
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
+                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
+                    </div>
+                    <div>
+                        <p class="m-0 p-0 text-dark fw-bold mx-3">
+                            Video 3 <br>
+                            Lorem ipsum
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-2">
+                    <div>
+                        <p style="margin-right: 10px; margin-top: 35px;">
+                            4
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
+                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
+                    </div>
+                    <div>
+                        <p class="m-0 p-0 text-dark fw-bold mx-3">
+                            Video 4 <br>
+                            Lorem ipsum
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-2">
+                    <div>
+                        <p style="margin-right: 10px; margin-top: 35px;">
+                            5
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
+                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
+                    </div>
+                    <div>
+                        <p class="m-0 p-0 text-dark fw-bold mx-3">
+                            Video 5 <br>
+                            Lorem ipsum
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="d-flex mb-2">
+                    <div>
+                        <p style="margin-right: 10px; margin-top: 35px;">
+                            5
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
+                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
+                    </div>
+                    <div>
+                        <p class="m-0 p-0 text-dark fw-bold mx-3">
+                            Video 5 <br>
+                            Lorem ipsum
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="d-flex mb-2">
+                    <div>
+                        <p style="margin-right: 10px; margin-top: 35px;">
+                            6
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
+                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
+                    </div>
+                    <div>
+                        <p class="m-0 p-0 text-dark fw-bold mx-3">
+                            Video 6 <br>
+                            Lorem ipsum
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="d-flex mb-2">
+                    <div>
+                        <p style="margin-right: 10px; margin-top: 35px;">
+                            7
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
+                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
+                    </div>
+                    <div>
+                        <p class="m-0 p-0 text-dark fw-bold mx-3">
+                            Video 7 <br>
+                            Lorem ipsum
+                        </p>
+                    </div>
+                </div>
+
+
+            </div>
+
         </div>
 
-        <div class="border rounded p-3 mb-4 mt-4">
+        <div class="border rounded p-3 mb-4 mt-0">
             <h4>
-                Live Calls
+                Your Progress
             </h4>
             <p class="p-0 m-0">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad illum atque cumque, enim <br>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.<br>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.<br>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.<br>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.<br>
+                <strong>Average Watching Time</strong> <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
+                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
+                mollitia nihil atque quis!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
+                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
+                mollitia nihil atque quis!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
+                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
+                mollitia nihil atque quis!
             </p>
         </div>
     </div>
 
 </div>
+
 {% include 'inc/msgs.inc.html' %}
 {% endblock content %}
