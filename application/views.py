@@ -806,13 +806,35 @@ def delete_user_device(request, device_id):
 
 # Function to Render the All Trainings Page 
 def all_trainings(request):
-    return render(request, 'all_trainings.html', {})
+    trainings = Training.objects.all()
+    context = {
+        'trainings' : trainings
+    }
+    return render(request, 'all_trainings.html', context)
     
     
 # Function to Render the All Modules Page 
-def all_modules(request):
-    return render(request, 'all_modules.html', {})
+def all_modules(request, training_id):
+    training = Training.objects.get(id=training_id)
+    modules = Module.objects.filter(training=training)
+    context = {
+        'training' : training,
+        'modules' : modules
+    }
+    return render(request, 'all_modules.html', context)
 
 # Function to render a single video page
-def video(request):
-    return render(request, 'video.html', {})
+def video(request, module_id):
+    module = Module.objects.get(id=module_id)
+    media = Media.objects.filter(module=module)
+    print(media[0])
+    # if len(media) > 1:
+    #     first_media = media[0]
+    # else:
+    #     first_media = media 
+    context = {
+        'module' : module,
+        'medias' : media,
+        'first_media' : media[0]
+    }
+    return render(request, 'video.html', context)

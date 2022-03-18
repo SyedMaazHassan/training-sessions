@@ -1,3 +1,5 @@
+from distutils.command.upload import upload
+from pydoc import describe
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User, auth
@@ -230,5 +232,43 @@ def delete_session(sender, instance, *args, **kwargs):
 
     
 
+# Model for the Trainings 
+class Training(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    thumbnail = models.ImageField(upload_to='thumbnails/')
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.name
+
+
+# Model for the Modules 
+class Module(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=255)
+    thumbnail = models.ImageField(upload_to='thumbnails/')
+    training = models.ForeignKey(Training, on_delete=models.CASCADE)
+    prev = models.ForeignKey('self', on_delete=models.CASCADE, related_name='mod_prev', null=True, blank=True)
+    next = models.ForeignKey('self', on_delete=models.CASCADE, related_name='mod_next', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+# Model for the Media 
+class Media(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    thumbnail = models.ImageField(upload_to='thumbnails/')
+    file = models.URLField()
+    module = models.ForeignKey(Module, on_delete=models.CASCADE)
+    prev = models.ForeignKey('self', on_delete=models.CASCADE, related_name='file_prev', null=True, blank=True)
+    next = models.ForeignKey('self', on_delete=models.CASCADE, related_name='file_next', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
 

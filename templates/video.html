@@ -18,11 +18,12 @@
 
 <div class="row">
 
+    
     <div class="col-lg-8 border rounded mb-3 p-0">
 
         <div class="iframe-container">
             <iframe style="width: 100%; height: 25rem; border-radius: 4px 4px 0px 0px;"
-                src="https://www.youtube.com/embed/qiUEgSCyY5o"></iframe>
+                src="{{ first_media.file }}"></iframe>
         </div>
 
         <div class="px-3 mt-3">
@@ -33,46 +34,31 @@
 
         <div class="p-3">
             <h5 class="m-0 p-0">
-                Whats an Auto Encoder?
+                {{ first_media.name }}
             </h5>
             <p class="text-secondary fw-bold">
-                Module 1-Video 1 | Lesson 1
+                {{ module.name }}-{{ forloop.counter }} | Lesson {{ forloop.counter }}
             </p>
             <h5 class="m-0 p-0">
                 Video 1
             </h5>
             <p class="text-dark">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
-                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
-                mollitia nihil atque quis! <br>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
-                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
-                mollitia nihil atque quis! <br>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
-                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
-                mollitia nihil atque quis! <br>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
-                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
-                mollitia nihil atque quis! <br>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus incidunt ab nostrum
-                consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero doloremque molestiae
-                mollitia nihil atque quis!Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias possimus
-                incidunt ab nostrum consequuntur placeat sunt! Officia ex accusamus dicta qui, quidem eaque! Vero
-                doloremque molestiae mollitia nihil atque quis!
+                {{ first_media.description }}
             </p>
         </div>
 
     </div>
 
+    
     <div class="col-lg-4">
         <div class="border rounded p-3 mb-4 mt-0">
 
             <h5 class="m-0 p-0">
-                Whats an Auto Encoder?
+                {{ first_media.name }}
             </h5>
 
             <p class="text-secondary fw-bold">
-                Module 1-Video 1 | Lesson 1
+                {{ module.name }}-1 | Lesson 1
             </p>
 
             <!-- Rounded switch -->
@@ -92,157 +78,27 @@
                 </div>
             </div>
 
-            <div class="videos-parent" style="overflow-y: scroll; overflow-x: hidden; height: 25rem;">
+            {% for media in medias %}
+                <div class="videos-parent mt-2" style="overflow-y: scroll; overflow-x: hidden; height: auto;">
 
-                <div class="d-flex mb-2">
-                    <div>
-                        <p style="margin-right: 10px; margin-top: 35px;">
-                            1
-                        </p>
-                    </div>
-                    <div>
-                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
-                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
-                    </div>
-                    <div>
-                        <p class="m-0 p-0 text-dark fw-bold mx-3">
-                            Video 1 <br>
-                            Lorem ipsum
-                        </p>
+                    <div class="d-flex mb-2">
+                        <div>
+                            <p style="margin-right: 10px; margin-top: 35px;">
+                                {{ forloop.counter }}
+                            </p>
+                        </div>
+                        <div>
+                            <img src="media/{{ media.thumbnail }}"
+                                class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
+                        </div>
+                        <div>
+                            <p class="m-0 p-0 text-dark fw-bold mx-3">
+                                {{ media.name }}
+                            </p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="d-flex mb-2">
-                    <div>
-                        <p style="margin-right: 10px; margin-top: 35px;">
-                            2
-                        </p>
-                    </div>
-                    <div>
-                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
-                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
-                    </div>
-                    <div>
-                        <p class="m-0 p-0 text-dark fw-bold mx-3">
-                            Video 2 <br>
-                            Lorem ipsum
-                        </p>
-                    </div>
-                </div>
-
-                <div class="d-flex mb-2">
-                    <div>
-                        <p style="margin-right: 10px; margin-top: 35px;">
-                            3
-                        </p>
-                    </div>
-                    <div>
-                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
-                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
-                    </div>
-                    <div>
-                        <p class="m-0 p-0 text-dark fw-bold mx-3">
-                            Video 3 <br>
-                            Lorem ipsum
-                        </p>
-                    </div>
-                </div>
-
-                <div class="d-flex mb-2">
-                    <div>
-                        <p style="margin-right: 10px; margin-top: 35px;">
-                            4
-                        </p>
-                    </div>
-                    <div>
-                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
-                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
-                    </div>
-                    <div>
-                        <p class="m-0 p-0 text-dark fw-bold mx-3">
-                            Video 4 <br>
-                            Lorem ipsum
-                        </p>
-                    </div>
-                </div>
-
-                <div class="d-flex mb-2">
-                    <div>
-                        <p style="margin-right: 10px; margin-top: 35px;">
-                            5
-                        </p>
-                    </div>
-                    <div>
-                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
-                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
-                    </div>
-                    <div>
-                        <p class="m-0 p-0 text-dark fw-bold mx-3">
-                            Video 5 <br>
-                            Lorem ipsum
-                        </p>
-                    </div>
-                </div>
-
-
-                <div class="d-flex mb-2">
-                    <div>
-                        <p style="margin-right: 10px; margin-top: 35px;">
-                            5
-                        </p>
-                    </div>
-                    <div>
-                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
-                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
-                    </div>
-                    <div>
-                        <p class="m-0 p-0 text-dark fw-bold mx-3">
-                            Video 5 <br>
-                            Lorem ipsum
-                        </p>
-                    </div>
-                </div>
-
-
-                <div class="d-flex mb-2">
-                    <div>
-                        <p style="margin-right: 10px; margin-top: 35px;">
-                            6
-                        </p>
-                    </div>
-                    <div>
-                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
-                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
-                    </div>
-                    <div>
-                        <p class="m-0 p-0 text-dark fw-bold mx-3">
-                            Video 6 <br>
-                            Lorem ipsum
-                        </p>
-                    </div>
-                </div>
-
-
-                <div class="d-flex mb-2">
-                    <div>
-                        <p style="margin-right: 10px; margin-top: 35px;">
-                            7
-                        </p>
-                    </div>
-                    <div>
-                        <img src="https://www.aihr.com/wp-content/uploads/Training-metrics-cover-1000x553-1.png"
-                            class="img-fluid" alt="video-thumbnail" style="width: 10rem; border-radius: 10px;">
-                    </div>
-                    <div>
-                        <p class="m-0 p-0 text-dark fw-bold mx-3">
-                            Video 7 <br>
-                            Lorem ipsum
-                        </p>
-                    </div>
-                </div>
-
-
-            </div>
+            {% endfor %}
 
         </div>
 
@@ -264,6 +120,7 @@
             </p>
         </div>
     </div>
+    
 
 </div>
 
