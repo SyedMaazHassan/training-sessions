@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'application.apps.ApplicationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     # adding django-agents to the installed apps 
     'django_user_agents',
+    'adminpanel.apps.AdminpanelConfig',
 ]
 
 # Adding Cache Backend for django-user-agents for rapid parsing
@@ -153,8 +155,6 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
-
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 

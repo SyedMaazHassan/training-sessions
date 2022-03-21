@@ -802,5 +802,62 @@ def delete_user_device(request, device_id):
         return HttpResponseRedirect(reverse('profile'))
     else:
         return HttpResponseRedirect(reverse('profile'))
+
+
+# Function to Render the All Trainings Page 
+@login_required(login_url='/signin/')
+def all_trainings(request):
+    trainings = Training.objects.all()
+    access = Access.objects.filter(user=request.user)
+    training_names = [t.training.name for t in access]
+    context = {
+        'trainings' : trainings,
+        'training_names' : training_names,
+    }
+    return render(request, 'all_trainings.html', context)
     
     
+# Function to Render the All Modules Page 
+@login_required(login_url='/signin/')
+def all_modules(request, training_id):
+    training = Training.objects.get(id=training_id)
+    modules = Module.objects.filter(training=training)
+    context = {
+        'training' : training,
+        'modules' : modules
+    }
+    return render(request, 'all_modules.html', context)
+
+# Function to render a single video page
+@login_required(login_url='/signin/')
+def media(request, training_id, module_id):
+    module = Module.objects.get(id=module_id)
+    medias = Media.objects.filter(module=module)
+    training = Training.objects.get(id=training_id)
+    print(medias[0])
+    # if len(media) > 1:
+    #     first_media = media[0]
+    # else:
+    #     first_media = media 
+    context = {
+        'module' : module,
+        'medias' : medias,
+        'first_media' : medias[0],
+        'training' : training,
+    }
+    return render(request, 'media.html', context)
+
+# Function to render the single_media page 
+login_required(login_url='/login/')
+def single_media(request, training_id, module_id, media_id):
+    training = Training.objects.get(id=training_id)
+    module = Module.objects.get(id=module_id)
+    media = Media.objects.get(id=media_id)
+    medias = Media.objects.filter(module=module)
+    context = {
+        'module' : module,
+        'media' : media,
+        'training' : training,
+        'medias': medias,
+    }
+    return render(request, 'single_media.html', context)

@@ -49,7 +49,19 @@ urlpatterns = [
     # Test path for checking the browser, IP-address, and device info of the user 
     path('browser/', views.get_browser_info, name = 'browser'),
 
-    path('device/<int:device_id>/delete', views.delete_user_device, name = 'delete_device')
+    path('device/<int:device_id>/delete', views.delete_user_device, name = 'delete_device'),
+
+    # Path to All trainings Page 
+    path('trainings/', views.all_trainings, name = 'trainings'),
+
+    # Path to (Single training - with all modules) Page 
+    path('trainings/<int:training_id>/modules/', views.all_modules, name = 'all_modules'),
+
+    # Path to (Single training - with single module - with all videos) Page 
+    path('trainings/<int:training_id>/modules/<int:module_id>/medias/', views.media, name = 'media'),
+
+    # Path to (Single training - with single module - with single media) Page 
+    path('trainings/<int:training_id>/modules/<int:module_id>/medias/<int:media_id>/', views.single_media, name = 'single_media'),
 
 ]
 

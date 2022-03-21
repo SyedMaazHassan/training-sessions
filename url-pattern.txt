@@ -1,0 +1,13 @@
+All trainings
+url / trainings /
+
+Single training - with all modules
+url / trainings / <training_id> / modules /
+
+Single training - with single module - with all videos
+url / trainings / <training_id> / modules / <module_id> / medias /
+
+
+Single training - with single module - with single media
+url / trainings / <training_id> / modules / <module_id> / medias / <media_id> /
+ 

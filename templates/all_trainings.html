@@ -1,0 +1,45 @@
+{% extends 'inc/dashboard_base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% bootstrap_javascript %}
+{% block title %}Dashboard{% endblock title %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">All Trainings</h1>
+</div>
+<div class="container">
+
+    {% for training in trainings %}
+    <div class="row border mb-2 rounded-3 shadow">
+        <div class="col-lg-10 d-flex align-items-center p-0">
+            <div>
+                <img src="media/{{ training.thumbnail }}"
+                    style="width: 15rem; margin-right: 20px;" alt="sample">
+            </div>
+            <div>
+                <h3>{{ training.name }}</h3>
+            </div>
+        </div>
+        <div class="col-lg-2 p-0 mt-4">
+            {% if training.name in training_names %}
+            <div style="margin-left: 1rem; margin-bottom: 1rem; margin-top: 1rem;">
+                <a href="{% url 'all_modules' training.id %}">
+                    <button type="button" class="btn btn-outline-secondary btn-sm mb-2">View More</button>
+                </a>
+                <div class="progress mb-1" style="height: 0.35rem; width: 9rem; border-radius: 0.95rem;">
+                    <div class="progress-bar bg-secondary w-75" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+                <p class="p-0 m-0">75% completed</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+
+
+</div>
+{% include 'inc/msgs.inc.html' %}
+{% endblock content %}

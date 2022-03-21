@@ -1,0 +1,19 @@
+{% extends 'inc/dashboard_base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_messages %}
+{% bootstrap_javascript %}
+{% block title %}Admin Panel{% endblock title %}
+
+
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Admin Panel</h1>
+    </div>
+    {% include 'inc/msgs.inc.html' %}
+    <script src="{% static 'assets/js/folders.js' %}"></script>
+    <script>
+        $("#id_password1, #id_password2").removeAttr("required");
+    </script>
+{% endblock content %}

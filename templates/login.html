@@ -29,14 +29,14 @@
                     {% csrf_token %}
                     {% bootstrap_form login_form layout="floating" %}
                     <div class="d-grid gap-2">
-                        <button class="btn btn-success" type="submit">Sign in</button>
+                        <button class="btn btn-dark" type="submit">Sign in</button>
                     </div>
                 </form>
             </div>
 
             <div class="card text-center mt-4">
               <div class="card-body">
-                <p class="card-text">New to iStudy? <a href="{% url 'signup' %}" class="link-text">Create an account</a></p>
+                <p class="card-text">New to iStudy? <a href="{% url 'signup' %}" class="link-text text-dark">Create an account</a></p>
               </div>
             </div>
         </div>
