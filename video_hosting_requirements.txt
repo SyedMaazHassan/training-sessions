@@ -1,0 +1,5 @@
+--> Requirements:
+	. All videos are not accessable except within the system.
+	. Any hosting service (paid or unpaid) could be used without their logo on videos.
+	. Can vimeo be integrated within the django project without giving the video's access outside the system?
+	. Videos must be played within the system without hosting provider's logo. 

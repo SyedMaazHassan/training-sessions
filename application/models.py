@@ -15,22 +15,21 @@ from django.dispatch import receiver
 # python manage.py runserver
 
 class Category(models.Model):
-    name = models.CharField(max_length = 100)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    created_at = models.DateTimeField(default = timezone.now)
+    name = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ("-id",)
-
 
 
 class Topic(models.Model):
-    name = models.CharField(max_length = 100)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    created_at = models.DateTimeField(default = timezone.now)
+    name = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.name
@@ -38,28 +37,33 @@ class Topic(models.Model):
     class Meta:
         ordering = ("-id",)
 
-    
+
 class Folder(models.Model):
-    name = models.CharField(max_length = 100)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    is_delete_allowed = models.BooleanField(default = False)
-    created_at = models.DateTimeField(default = timezone.now)
+    name = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_delete_allowed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ("-id",)
+
 
 class Term(models.Model):
-    title = models.CharField(max_length = 100)
-    category = models.ForeignKey(Category, on_delete = models.SET_NULL, null = True)
+    title = models.CharField(max_length=100)
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True)
     topics = models.ManyToManyField(Topic)
-    typee = models.CharField(max_length = 10, choices = [('Word', 'Word'), ('Phrase', 'Phrase'), ('Term', 'Term')])
+    typee = models.CharField(max_length=10, choices=[(
+        'Word', 'Word'), ('Phrase', 'Phrase'), ('Term', 'Term')])
     content = models.TextField()
-    user = models.ForeignKey(User, on_delete = models.CASCADE, null = True, blank = True)
-    folder = models.ForeignKey(Folder, on_delete = models.CASCADE, null = True, blank = True)
-    created_at = models.DateTimeField(default = timezone.now)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    folder = models.ForeignKey(
+        Folder, on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def get_short_text_only(self):
         return self.terminate(self.get_text_only(), 526)
@@ -68,13 +72,13 @@ class Term(models.Model):
         text = html2text.html2text(self.content)
         return text
 
-    def terminate(self, string, limit = 30):
+    def terminate(self, string, limit=30):
         if len(string) >= limit:
             return string[0: limit] + "..."
         return string
 
     def actual_title(self):
-        my_title = self.title.capitalize() 
+        my_title = self.title.capitalize()
         return self.terminate(my_title)
 
     def serialize_object(self):
@@ -88,7 +92,7 @@ class Term(models.Model):
     def save(self, *args, **kwargs):
         # figure out warranty end date
         self.title = self.title.lower()
-        super(Term, self).save(*args, **kwargs)   
+        super(Term, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -105,13 +109,13 @@ class Bookmark(models.Model):
         ('purple', 'Purple'),
         ('red', 'Red'),
     ]
-    title = models.CharField(max_length = 255)
+    title = models.CharField(max_length=255)
     content = models.TextField()
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    source = models.ForeignKey(Term, on_delete = models.SET_NULL, null = True)
-    color = models.CharField(max_length = 50, choices = CHOICES, default='yellow')
-    comment = models.TextField(null = True, blank = True)
-    created_at = models.DateTimeField(default = timezone.now)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    source = models.ForeignKey(Term, on_delete=models.SET_NULL, null=True)
+    color = models.CharField(max_length=50, choices=CHOICES, default='yellow')
+    comment = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def get_json(self):
         return {
@@ -127,13 +131,15 @@ class Bookmark(models.Model):
 
 
 class Learning(models.Model):
-    query = models.CharField(max_length = 255)
-    term = models.ForeignKey(Term, on_delete = models.CASCADE, null = True, blank = True)
-    bookmark = models.ForeignKey(Bookmark, on_delete = models.CASCADE, null = True, blank = True)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    created_at = models.DateTimeField(default = timezone.now)
+    query = models.CharField(max_length=255)
+    term = models.ForeignKey(
+        Term, on_delete=models.CASCADE, null=True, blank=True)
+    bookmark = models.ForeignKey(
+        Bookmark, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
 
-    def clip_text(self, limit = 30):
+    def clip_text(self, limit=30):
         if len(self.query) >= limit:
             return self.query[0: limit] + "..."
         return self.query
@@ -142,7 +148,7 @@ class Learning(models.Model):
         ordering = ("id",)
 
 
-# Custom Model for the Device 
+# Custom Model for the Device
 class Device(models.Model):
     session = models.OneToOneField(Session, on_delete=models.CASCADE)
     browser = models.CharField(max_length=50)
@@ -152,9 +158,9 @@ class Device(models.Model):
     ip = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     datetime = models.DateTimeField(auto_now_add=True)
-    last_login = models.DateTimeField(default = timezone.now)
+    last_login = models.DateTimeField(default=timezone.now)
 
-    # method to fetch the ip of client 
+    # method to fetch the ip of client
     def get_client_ip(self, request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
@@ -168,7 +174,7 @@ class Device(models.Model):
 
         # status of mobile, pc or tablet
         is_mobile = request.user_agent.is_mobile
-        is_tablet = request.user_agent.is_tablet 
+        is_tablet = request.user_agent.is_tablet
         is_pc = request.user_agent.is_pc
 
         if is_mobile:
@@ -176,10 +182,10 @@ class Device(models.Model):
         elif is_tablet:
             self.device_type = 'Tablet'
         elif is_pc:
-            self.device_type = 'PC or Laptop' 
+            self.device_type = 'PC or Laptop'
         else:
             self.device_type = 'Unknown'
-                
+
         # fetching the browser info
         browser_family = request.user_agent.browser.family
         self.browser = browser_family
@@ -196,15 +202,15 @@ class Device(models.Model):
 
         ip = self.get_client_ip(request)
         self.ip = ip
-    
+
     def is_already_exists(self):
         device_queryset = Device.objects.filter(
             user=self.user,
             browser=self.browser,
-            device = self.device,
-            device_type = self.device_type,
-            os = self.os,
-            ip = self.ip)
+            device=self.device,
+            device_type=self.device_type,
+            os=self.os,
+            ip=self.ip)
 
         return device_queryset.first()
 
@@ -223,12 +229,7 @@ class Device(models.Model):
         return f'{self.user} - ({self.os}, {self.browser}, {self.device_type}, {self.ip}, {self.session})'
 
 
-#signal to remove session from DB after deleting the device
-@receiver(post_delete, sender = Device)
+# signal to remove session from DB after deleting the device
+@receiver(post_delete, sender=Device)
 def delete_session(sender, instance, *args, **kwargs):
     instance.session.delete()
-
-    
-
-
-

@@ -15,17 +15,18 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import *
 import re
- 
+
 # Make a regular expression
 # for validating an Email
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label = 'Email address', required = True)
-    password = forms.CharField(label='Password', widget=forms.PasswordInput, help_text=None)
+    email = forms.EmailField(label='Email address', required=True)
+    password = forms.CharField(
+        label='Password', widget=forms.PasswordInput, help_text=None)
 
     def is_user_exists(self, email):
-        user = User.objects.filter(email = email)
+        user = User.objects.filter(email=email)
         return user.first()
 
     def clean(self):
@@ -44,15 +45,16 @@ class LoginForm(forms.Form):
 
 
 class BookmarkForm(forms.ModelForm):
-    source_input = forms.CharField(widget=forms.HiddenInput(), required = False)
+    source_input = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, user, source=None, *args, **kwargs):
-        super(BookmarkForm, self).__init__(*args,**kwargs) # populates the post
+        super(BookmarkForm, self).__init__(
+            *args, **kwargs)  # populates the post
         self.user_obj = user
         self.source_obj = source
 
     def get_source_object(self, source_input_id):
-        query = Term.objects.filter(user = self.user_obj, id = source_input_id)
+        query = Term.objects.filter(user=self.user_obj, id=source_input_id)
         return query.first()
 
     def clean(self):
@@ -69,7 +71,7 @@ class BookmarkForm(forms.ModelForm):
             if source_obj:
                 new_data['source'] = source_obj
             else:
-                self.add_error('content', "Bookmark can't be added!")    
+                self.add_error('content', "Bookmark can't be added!")
         else:
             new_data['source'] = self.source_obj
 
@@ -85,35 +87,36 @@ class BookmarkForm(forms.ModelForm):
 class TermForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
-        super (TermForm, self).__init__(*args,**kwargs) # populates the post
+        super(TermForm, self).__init__(*args, **kwargs)  # populates the post
         self.fields['category'].queryset = Category.objects.filter(user=user)
         self.fields['topics'].queryset = Topic.objects.filter(user=user)
         self.fields['folder'].queryset = Folder.objects.filter(user=user)
         self.fields['typee'].label = "Type"
         self.user_obj = user
-        
+
     def is_term_exists(self, term_title):
-        return Term.objects.filter(title__iexact=term_title, user = self.user_obj).exists()
+        return Term.objects.filter(title__iexact=term_title, user=self.user_obj).exists()
 
     def clean(self):
         cleaned_data = super().clean()
         title = cleaned_data.get('title')
         if (not self.instance.id) and self.is_term_exists(title):
-            self.add_error('title', 'Term with this title already exists')    
+            self.add_error('title', 'Term with this title already exists')
 
     class Meta:
         model = Term
         fields = ('title', 'category', 'topics', 'typee', 'content', 'folder')
 
+
 class UserForm(UserCreationForm):
-    password1=forms.CharField(
-        label='Password', 
+    password1 = forms.CharField(
+        label='Password',
         widget=forms.PasswordInput(
             attrs={
                 "data-bs-toggle": "popover",
-                "title":"Password instructions",
-                "data-bs-html":"true",
-                "data-bs-content":" \
+                "title": "Password instructions",
+                "data-bs-html": "true",
+                "data-bs-content": " \
                     <ul> \
                         <li class='my-2'>Your password can’t be too similar to your other personal information.<br></li> \
                         <li class='my-2'>Your password must contain at least 8 characters.<br></li> \
@@ -122,19 +125,18 @@ class UserForm(UserCreationForm):
                     </ul>"
             }
         ),
-        validators=[validate_password],  
+        validators=[validate_password],
         help_text=None
     )
-    # password1 = forms.CharField(label='Password', widget=forms.PasswordInput, help_text=None)     
+    # password1 = forms.CharField(label='Password', widget=forms.PasswordInput, help_text=None)
     # city = forms.CharField(widget=forms.TextInput(attrs={'autocomplete':'off'}))
-
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'password1', 'password2')
 
     def is_user_exists(self, email):
-        user = User.objects.filter(email = email)
+        user = User.objects.filter(email=email)
         return user.exists()
 
     def clean(self):
@@ -144,9 +146,6 @@ class UserForm(UserCreationForm):
 
         # Validate email
         regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-
-        
-
 
         for i in required_fields:
             my_field = cleaned_data.get(i)
@@ -164,7 +163,6 @@ class UserForm(UserCreationForm):
             if self.is_user_exists(email):
                 self.add_error('email', 'This email is already registered')
 
-
         # All test passed
         if len(self.errors) == 0:
             new_data = self.cleaned_data.copy()
@@ -173,7 +171,6 @@ class UserForm(UserCreationForm):
             del new_data['password1']
             del new_data['password2']
             return new_data
-
 
 
 class FolderForm(forms.ModelForm):
