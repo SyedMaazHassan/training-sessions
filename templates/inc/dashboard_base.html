@@ -29,6 +29,9 @@
     <!-- CSS file for the toggle button  -->
     <link rel="stylesheet" href="{% static 'assets/css/toggle.css' %}">
 
+    <!-- Custom CSS  -->
+    <link rel="stylesheet" href="{% static 'assets/css/my-custom.css' %}">
+
     <!-- <link rel="stylesheet" href="{% static 'assets/richtext/css/site.css' %}"> -->
     <link rel="stylesheet" href="{% static 'assets/richtext/css/richtext.min.css' %}">
     <script src="{% static 'assets/richtext/js/jquery.richtext.js' %}"></script>
@@ -240,9 +243,7 @@
                 <form action="{% url 'create-folder' %}" method="post">
                     {% csrf_token %}
                     <div class="modal-body">
-                        <div>
-                            {% bootstrap_form folder_form layout='floating' %}
-                        </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->

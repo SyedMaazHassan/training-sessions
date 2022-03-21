@@ -117,3 +117,7 @@ button {
 #training-thumbnail{
   width: 25px !important;
 }
+
+#single-video-container{
+  background-color: rgb(230, 230, 230) !important;
+}

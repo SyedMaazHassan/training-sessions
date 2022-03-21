@@ -23,6 +23,7 @@
             </div>
         </div>
         <div class="col-lg-2 p-0 mt-4">
+            {% if training.name in training_names %}
             <div style="margin-left: 1rem; margin-bottom: 1rem; margin-top: 1rem;">
                 <a href="{% url 'all_modules' training.id %}">
                     <button type="button" class="btn btn-outline-secondary btn-sm mb-2">View More</button>
@@ -33,6 +34,7 @@
                 </div>
                 <p class="p-0 m-0">75% completed</p>
             </div>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

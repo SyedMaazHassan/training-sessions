@@ -8,6 +8,7 @@ import html2text
 from django.contrib.sessions.models import Session
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+# from django.contrib import admin
 
 
 # Create your models here.
@@ -272,3 +273,9 @@ class Media(models.Model):
     def __str__(self):
         return self.name
 
+
+# Model for giving the access to the user 
+class Access(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    training = models.ForeignKey(Training, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
